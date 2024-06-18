@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Cliente</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: flex-start; /* Alinear elementos al inicio del contenedor */
+            min-height: 100vh; /* Altura mínima para ocupar toda la pantalla */
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido {
+            text-align: center;
+            position: relative;
+            display: flex; /* Utilizamos flexbox para alinear los elementos en una columna */
+            flex-direction: column; /* Dirección de los elementos en columna */
+            align-items: center; /* Centrar elementos horizontalmente */
+            margin-top: 20px; /* Agregamos margen superior para separar del borde superior */
+        }
+
+        .imagen {
+            width: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px; /* Agregar margen inferior para separar del siguiente elemento */
+        }
+
+        .cuadro-amarillo {
+            background-color: yellow;
+            padding: 3px 6px; /* Ajustar el espacio dentro del cuadro amarillo */
+            border-radius: 5px; /* Redondear los bordes del cuadro */
+            margin-bottom: 20px; /* Agregar margen inferior para separar del siguiente elemento */
+        }
+
+        .cuadro-amarillo p {
+            margin: 0;
+            font-size: 10px; /* Tamaño de fuente más pequeño */
+        }
+
+        /* Estilo para el tamaño de fuente más pequeño */
+        .contenido p.small {
+            font-size: 14px;
+        }
+
+        /* Ajustar margen superior e inferior de los párrafos */
+        .contenido p {
+            margin: 5px 0; /* Margen de 5px arriba y abajo */
+        }
+    </style>
+</head>
+<body>
+    <div class="contenido">
+        <img class="imagen" src="./assets/logo.jpg" alt="foto-obra" class="photo-obra img-fluid">
+        <div class="cuadro-amarillo">
+            <p>HORA DE ENTREGA:</p>
+            <p class="small">&lt;&lt;[HORA DE ENTREGA]&gt;&gt;</p>
+        </div>
+        <h2>CLIENTES</h2>
+        <p>NOMBRE DE LA MASCOTA: &lt;&lt;[NOMBRE DE LA MASCOTA]&gt;&gt;</p>
+        <p>PROPIETARIO: &lt;&lt;[PROPIETARIO].[PROPIETARIO]&gt;&gt;</p>
+        <p>TIPO DE SERVICIO: &lt;&lt;[TIPO DE SERVICIO].[SERVICIO]&gt;&gt;</p>
+        <p>COSTO DEL SERVICIO: &lt;&lt;[COSTO DEL SERVICIO]&gt;&gt;</p>
+        <p>OBSERVACIONES: &lt;&lt;[OBSERVACIONES]&gt;&gt;</p>
+        <h3>HORARIO DE ATENCIÓN:</h3>
+        <p class="small">LUNES - VIERNES 9:30 AM - 6:30 PM</p>
+        <p class="small">SÁBADO 9:30 AM - 4:00 PM</p>
+        <p class="small">MASCOTA QUE PERMANEZCA FUERA DE ATENCIÓN GENERA UN CARGO ADICIONAL POR CONCEPTO DE HOSPEDAJE.</p>
+    </div>
+</body>
+</html>
