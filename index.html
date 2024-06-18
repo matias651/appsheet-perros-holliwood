@@ -1,76 +1,346 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información del Cliente</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center; /* Centrar horizontalmente */
-            align-items: flex-start; /* Alinear elementos al inicio del contenedor */
-            min-height: 100vh; /* Altura mínima para ocupar toda la pantalla */
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI Light", Arial, sans-serif;
+      margin: 10px; /* Reducido el margen */
+      background-color: #ffffff;
+      border: 0.5px solid #fff; /* Establecer un borde blanco */
+    }
+  
+    .detalles {
+      gap: 10px;
+    }
+  
+    .subcuadro span {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  
+    .subcuadro .fecha {
+      position: absolute; /* Establecemos la posición absoluta */
+      top: 10px; /* Alineamos el elemento con respecto al borde superior del contenedor */
+      right: 10px; /* Alineamos el elemento con respecto al borde derecho del contenedor */
+      font-weight: bold;
+      color: #666;
+    }
+  
+    .columna-orden-1 {
+      padding-left: 10px; /* Ajuste del padding izquierdo */
+    }
+  
+    /* Reducido el tamaño de la letra */
+    .subcuadro,
+    .acuerdo-parrafo {
+      font-size: x-small; /* Tamaño de letra reducido */
+    }
+  
+    hr,
+    h4,
+    h5,
+    .acuerdo-parrafo {
+      margin: 15px 20px;
+      margin: 5px 20px; /* Ajusta el margen superior e inferior */
+      margin-bottom: 10px; /* Ajusta el margen inferior de los párrafos de acuerdo y la tabla */
+    }
 
-        .contenido {
-            text-align: center;
-            position: relative;
-            display: flex; /* Utilizamos flexbox para alinear los elementos en una columna */
-            flex-direction: column; /* Dirección de los elementos en columna */
-            align-items: center; /* Centrar elementos horizontalmente */
-            margin-top: 20px; /* Agregamos margen superior para separar del borde superior */
-        }
+    }
+  
+    .acuerdo-parrafo::before {
+      content: "·"; /* Añade el punto inicial antes de cada párrafo */
+      font-weight: bold; /* Hace que el punto inicial sea más grande y llamativo */
+      margin-right: 5px; /* Añade espacio entre el punto inicial y el texto */
+    }
+  
+   
+    /* Estilo para el texto "Proveedor" en rojo */
+    .proveedor {
+      color: rgb(255, 0, 0);
+    }
+  
+    .firma {
+      font-weight: bold;
+      font-size: small;
+      text-align: left; /* Alinear el texto a la izquierda */
+      background-color: transparent;
+      padding: 1px;
+      min-width: 100%;
+      float: left; /* Mover la firma a la izquierda */
+      margin: 0px 0px 0px 50px;
+    }
+  
+    .gradiente {
+    
+      color: #666666; /* Cambiar a un gris sólido */
+    }
+  
+    .subcuadro {
+      border: 0.5px solid #5e5c5c;
+      border-radius: 25px;
+      padding: 10px;
+      background-color: #ffffff;
+      position: relative;
+      margin-bottom: 0; /* Elimina el margen inferior */
+      font-size: x-small;
+    }
+  
+    .column-right {
+      text-align: right;
+    }
+  
+    /* Estilos opcionales para mejorar la apariencia */
+  
+    .detalles {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  
+    .row {
+      display: flex;
+      align-items: center;
+    }
+  
+    .fecha {
+      top: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+    }
+  
+  
+    table {
+      color: black; /* Cambia el color del texto en la tabla a negro */
+      width: 100%; /* Ancho de la tabla */
+      border-collapse: collapse; /* Colapso de bordes */
+      margin-top: 20px; /* Espacio entre tablas */
+      font-size: 12px; /* Cambia el color del texto en la tabla a negro */
+    }
+  
+    th,
+    td {
+      border: 1px solid white; /* Borde blanco */
+      padding: 8px; /* Espaciado interno */
+      text-align: center; /* Alineación del texto */
+    }
+  
+    th {
+      background-color: rgba(0, 32, 96); /* Color de fondo de las celdas de encabezado */
+      color: white;
+    }
+  
+    th.item {
+      width: 10%; /* Ancho del encabezado ITEM */
+    }
+  
+    th.descripcion {
+      width: 40%; /* Ancho del encabezado DESCRIPCIÓN */
+    }
+  
+    th.unidad {
+      width: 10%; /* Ancho del encabezado UNIDAD */
+    }
+  
+    th.cantidad {
+      width: 10%; /* Ancho del encabezado CANTIDAD */
+    }
+  
+    th.precio {
+      width: 10%; /* Ancho del encabezado PRECIO UNITARIO */
+    }
+  
+    th.total {
+      width: 10%; /* Ancho del encabezado TOTAL */
+    }
+  
+    .tabla-adicional td {
+      color: black; /* Cambia el color del texto a negro */
+    }
+  
+    /* Para los subcuadros */
+    .subcuadro .container {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    /* Para agrupar la primera y segunda columna */
+    .subcuadro .container .column-left {
+      flex: 1; /* Hace que ocupen el mismo espacio */
+    }
+  
+    /* Para agrupar la tercera y cuarta columna */
+    .subcuadro .container .column-right {
+      flex: 1; /* Hace que ocupen el mismo espacio */
+      margin-left: 20px;
+    }
+   
+    .subtotal,
+    .igv,
+    .total {
+      width: 11%; /* Aplicamos el mismo ancho que el último encabezado de la tabla principal */
+    }
 
-        .imagen {
-            width: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px; /* Agregar margen inferior para separar del siguiente elemento */
-        }
 
-        .cuadro-amarillo {
-            background-color: yellow;
-            padding: 3px 6px; /* Ajustar el espacio dentro del cuadro amarillo */
-            border-radius: 5px; /* Redondear los bordes del cuadro */
-            margin-bottom: 20px; /* Agregar margen inferior para separar del siguiente elemento */
-        }
 
-        .cuadro-amarillo p {
-            margin: 0;
-            font-size: 10px; /* Tamaño de fuente más pequeño */
-        }
+  </style>
+  
 
-        /* Estilo para el tamaño de fuente más pequeño */
-        .contenido p.small {
-            font-size: 14px;
-        }
-
-        /* Ajustar margen superior e inferior de los párrafos */
-        .contenido p {
-            margin: 5px 0; /* Margen de 5px arriba y abajo */
-        }
-    </style>
 </head>
-<body>
-    <div class="contenido">
-        <img class="imagen" src="./assets/logo.jpg" alt="foto-obra" class="photo-obra img-fluid">
-        <div class="cuadro-amarillo">
-            <p>HORA DE ENTREGA:</p>
-            <p class="small">&lt;&lt;[HORA DE ENTREGA]&gt;&gt;</p>
+
+<body>  
+  <div class="contenedor">
+    <div class="detalles">
+      <div class="subcuadro" style="height: 65px;">
+        <div class="row">      
+          <span class="fecha">FECHA: &lt;&lt;[Fecha]&gt;&gt;</span>
+          <img src='https://i.postimg.cc/8zmrPVJp/Whats-App-Image-2024-03-14-at-13-19-56-1.jpg' class='imagen' alt='Imagen' width='150'>    
+          <div class="columna-orden-1" style="margin-left: 110px; text-align: center;">          
+            <div class="elemento"><span>ORDEN DE APROBACION:&lt;&lt;[ID_aprobado]&gt;&gt;-&lt;&lt;[Fecha]&gt;&gt;</span> </div>
+            <!-- <span class="ICH">&lt;&lt;[Fecha]&gt;&gt;</span> -->
+          </div>         
         </div>
-        <h2>CLIENTES</h2>
-        <p>NOMBRE DE LA MASCOTA: &lt;&lt;[NOMBRE DE LA MASCOTA]&gt;&gt;</p>
-        <p>PROPIETARIO: &lt;&lt;[PROPIETARIO].[PROPIETARIO]&gt;&gt;</p>
-        <p>TIPO DE SERVICIO: &lt;&lt;[TIPO DE SERVICIO].[SERVICIO]&gt;&gt;</p>
-        <p>COSTO DEL SERVICIO: &lt;&lt;[COSTO DEL SERVICIO]&gt;&gt;</p>
-        <p>OBSERVACIONES: &lt;&lt;[OBSERVACIONES]&gt;&gt;</p>
-        <h3>HORARIO DE ATENCIÓN:</h3>
-        <p class="small">LUNES - VIERNES 9:30 AM - 6:30 PM</p>
-        <p class="small">SÁBADO 9:30 AM - 4:00 PM</p>
-        <p class="small">MASCOTA QUE PERMANEZCA FUERA DE ATENCIÓN GENERA UN CARGO ADICIONAL POR CONCEPTO DE HOSPEDAJE.</p>
+        <span class="dpto-ich" style="margin-left: 2px;">DEPARTAMENTO LOGISTICO ICH</span>
+      </div>
+
+      <div class="subcuadro" style="height: 70px; margin: 0.5% 0% 0.5% 0%">
+        <span><center>INSTITUTO DE CIENCIAS Y HUMANIDADES</center></span>
+        <br>
+        <div class="container">
+          <div class="column column-left">            
+            <span>RUC:</span>
+            <span>REPRESENTANTE:</span>
+            <span>CARGO:</span>
+          </div>
+          <div class="column column-left">
+            <span>&lt;&lt;[RUC]&gt;&gt;</span>
+            <span>&lt;&lt;[Representante]&gt;&gt;</span>
+            <span>&lt;&lt;[Cargo]&gt;&gt;</span>            
+          </div>
+          <div class="column column-right">
+            <span>TELEFONO: </span>
+            <span style="color: white; visibility: hidden;">2</span>
+            <span style="color: white; visibility: hidden;">2</span>
+          </div>
+          <div class="column column-right">  
+            <span> &lt;&lt;[Celular]&gt;&gt; </span>
+            <span style="color: white; visibility: hidden;">2</span>
+            <span style="color: white; visibility: hidden;">2</span>
+          </div>        
+        </div>
+      </div>
+
+      <div class="subcuadro" style="height: 110px">
+        <div class="container">
+          <div class="column column-left">
+            <span class="gradiente">PROVEEDOR:</span>
+            <span class="gradiente">DIRECCION:</span>
+            <span class="gradiente">DISTRITO: </span>
+            <span class="gradiente">RUC: </span>
+            <span class="gradiente">REPRESENTANTE:</span>
+            <span class="gradiente">TELEFONO:</span>
+            <span class="gradiente">LUGAR DE ENTREGA:</span>
+          </div>
+          
+          <div class="column column-left">
+            <span class="proveedor">&lt;&lt;[Proveedor].[Proveedor]&gt;&gt;</span>
+            <span class="gradiente">&lt;&lt;[Dirección]&gt;&gt;</span>
+            <span class="gradiente">&lt;&lt;[Distrito]&gt;&gt;</span>
+            <span>&lt;&lt;[RUC]&gt;&gt;</span>
+            <span>&lt;&lt;[REPRESENTANTE]&gt;&gt;</span>
+            <span>&lt;&lt;[Teléfono]&gt;&gt;</span>
+            <span>&lt;&lt;[Lugar de entrega]&gt;&gt;</span>
+          </div>
+          
+          <div class="column column-right">
+            <span class="gradiente">FECHA DE ENTREGA: </span>
+            <span class="gradiente">FECHA DE CULMINACION: </span>
+            <span class="gradiente">FORMA DE PAGO: </span>
+            <span class="gradiente">MONEDA: </span>
+            <span class="gradiente">FECHA DE TRANSFERENCIA: </span>
+            <span class="gradiente">CREDITO: </span>
+            <span style="color: white; visibility: hidden;">2</span>
+          </div>
+
+          <div class="column column-right">
+            <span> &lt;&lt;[Fecha de inicio]&gt;&gt;</span>
+            <span> &lt;&lt;[Fecha de culminación]&gt;&gt;</span>
+            <span><b>&lt;&lt;[Forma de pago]&gt;&gt;</b></span>
+            <span> &lt;&lt;[Moneda]&gt;&gt;</span>
+            <span> &lt;&lt;[Fecha de transferencia]&gt;&gt; </span>
+            <span> &lt;&lt;[Crédito]&gt;&gt;</span>
+            <span style="color: white; visibility: hidden;">2</span>
+          </div>
+
+        </div>
+      </div>
     </div>
+
+    <h4>ACUERDOS:</h4>
+    <hr>
+    <p class="acuerdo-parrafo">1.MEDIANTE EL DOCUMENTO DOY MI APROBACION COTIZACION N° ESPERANDO SE PUEDA ATENDER RAPIDAMENTE SEGUN LA FECHA ESTABLECIDA EN EL DOCUMENTO</p>
+    <p class="acuerdo-parrafo">2.EL DESPACHO DE LOS EQUIPOS SE REALIZARA UNA SOLA ENTREGA SEGÚN LA FECHA ESTABLECIDAS LÍNEAS ARRIBA</p>
+    <p class="acuerdo-parrafo">3.LOS EQUIPOS SERAN ENTREGADOS A LAS DIFERENTES SEDES SEGÚN EL CUADRO DE DISTRIBUCION QUE FIGURA EN DOCUEMNTO Y SERA ACOMPAÑADO DE UNA  GUIA</p>
+    <p class="acuerdo-parrafo">4.SE FACTURARA DEACUERDO LA ENTREGA POR SEDES</p>
+    <p class="acuerdo-parrafo">5.LOS PRECIOS ESTÁN ESTABLECIDOS EN DÓLARES</p>
+    <p class="acuerdo-parrafo">6.LUEGO DE LA RECEPCION DE LOS PRODUCTO SE PROCEDERA AL CONTROL DE CALIDAD Y AL ACTA DE CONFORMIDAD</p>
+    <p class="acuerdo-parrafo">7.EL PROVEEDOR NOS DA LA GARANTÍA DE 2 AÑO Y EL RESPALDO TÉCNICO DE LOS EQUIPOS</p>
+
+    <h4>Detalle de Artículos:</h4>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="item">ITEM</th>
+          <th class="descripcion">DESCRIPCION</th>
+          <th class="unidad">UNIDAD</th>
+          <th class="cantidad">CANTIDAD</th>
+          <th class="precio">PRECIO UNITARIO</th>
+          <th class="total">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <p>&lt;&lt;Start: [Related detalle_pedidos]&gt;&gt;</p>  
+        <tr>
+          <td>&lt;&lt;[CONTADOR]&gt;&gt;</td>
+          <td>&lt;&lt;[Producto].[Producto]&gt;&gt;</td>
+          <td>&lt;&lt;[Unidad]&gt;&gt;</td>
+          <td>&lt;&lt;[Cantidad]&gt;&gt;</td>
+          <td>&lt;&lt;[Precio unitario]&gt;&gt;</td>
+          <td>&lt;&lt;[Total]&gt;&gt;</td>
+        </tr>  
+        <p>&lt;&lt;End&gt;&gt;</p>
+      </tbody>
+    </table>
+    
+    <table style="margin-top: 20px; width: 21.7%; float: right; margin-right: 4px;">
+      <thead>
+        <tr>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">SUB-TOTAL</th>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">&lt;&lt;[SUBTOTAL]&gt;&gt;</th>
+        </tr>
+        <tr>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">IGV</th>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">&lt;&lt;[IGV 18%]&gt;&gt;</th>
+        </tr>
+        <tr>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">TOTAL</th>
+          <th class="precio" style="width: 10%; background-color: white; color: black; border: 1px solid black;">&lt;&lt;[Total]&gt;&gt;</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="contenedor-firmas">
+      <div class="firma">Firma:___________</div>
+      <div class="firma">JULIO GONZALES MACHICA</div>
+      <div class="firma">LOGISTICA – ICH-PRE</div>
+      <br>
+      <br>
+    </div>
+
+  </div>
 </body>
+
 </html>
